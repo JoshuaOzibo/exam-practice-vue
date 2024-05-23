@@ -1,11 +1,12 @@
 <script >
 import { RouterLink, RouterView } from 'vue-router';
+  
 import Home from './views/Home.vue';
 
 export default {
   components: {
     RouterLink,
-    RouterView
+    RouterView,
   }
 }
 </script>

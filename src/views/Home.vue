@@ -1,8 +1,8 @@
 <script setup>
 import { useFetch } from '../components/composables/compose.js';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
-
+import Modal from '../components/Modal.vue';
 const { dataFetch, error } = useFetch();
 const router = useRouter();
 
@@ -27,27 +27,26 @@ const getYearFromDate = (dateString) => {
 // Computed property to filter data based on selected year
 const filteredData = computed(() => {
   let filtered = data.value = dataFetch.value;
+
   if (selectedYear.value !== 'All') {
     filtered = filtered.filter(item => getYearFromDate(item.created_at) === parseInt(selectedYear.value));
   }
+
+  
   if (searchInput.value.trim() !== '') {
     filtered = filtered.filter(item => item.name.toLowerCase().includes(searchInput.value.trim().toLowerCase()));
   }
   return filtered;
 });
 
-// Fetch data on component mount
-onMounted(() => {
-    data.value = dataFetch.value;
-});
 
 </script>
 
 <template>
   <div class="px-5">
     <div class="flex items-center justify-between">
-      <button @click="clickFetchBtn" class="border-2 mb-[10px] border-black p-[10px] rounded-md">Fetch Repository</button>
-      <input v-model.trim.lazy="searchInput" class="border w-[40%] h-[40px] border-black pl-2" placeholder="Search for Repo" type="text">
+      <Modal />
+      <input v-model.trim="searchInput" class="border w-[40%] h-[40px] border-black pl-2" placeholder="Search for Repo" type="text">
       <select v-model="selectedYear" class="w-[30%] cursor-pointer border-black h-[40px] border">
         <option value="All">All</option>
         <option value="2022">2022</option>
