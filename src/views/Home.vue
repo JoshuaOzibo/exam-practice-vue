@@ -1,6 +1,6 @@
 <script setup>
 import { useFetch } from '../components/composables/compose.js';
-import { ref, computed, onMounted, watchEffect } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Modal from '../components/Modal.vue';
 const { dataFetch, error } = useFetch();
@@ -39,6 +39,10 @@ const filteredData = computed(() => {
   return filtered;
 });
 
+// Fetch data on component mount
+onMounted(() => {
+    data.value = dataFetch.value;
+});
 
 </script>
 

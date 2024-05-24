@@ -2,6 +2,8 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import {useFetch} from '../components/composables/compose.js';
+import UpdateRepo from '../components/UpdateRepo.vue';
+
 const {apiToken} = useFetch();
 const router = useRouter();
 
@@ -87,9 +89,7 @@ const handleDeleteEvent = async() => {
         </div>
 
         <div class="w-full flex justify-between mt-[20px]">
-          <button class="py-[10px] border border-white rounded-md cursor-pointer px-[25px]">
-            Update
-          </button>
+          <UpdateRepo :repo="repository" />
           <button
             @click="handleDeleteEvent"
             class="py-[10px] border border-white rounded-md cursor-pointer px-[25px]"
